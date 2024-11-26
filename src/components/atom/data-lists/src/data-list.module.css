@@ -1,0 +1,23 @@
+.dataList {
+  width: 100%;
+  max-width: 280px;
+  max-height: 160px;
+  margin-top: 8px;
+  overflow-y: auto;
+  background-color: #f8f8f8;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  list-style: none;
+  padding: 0;
+}
+
+.dataItem {
+  padding: 10px;
+  cursor: pointer;
+  background-color: #e6f7ff;
+  transition: background-color 0.2s;
+}
+
+.dataItem:hover {
+  background-color: #bae7ff;
+}

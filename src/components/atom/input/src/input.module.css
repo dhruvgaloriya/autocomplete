@@ -1,0 +1,27 @@
+.inputContainer {
+  position: relative;
+  width: 100%;
+  max-width: 280px;
+}
+
+.icon {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+}
+
+.inputField {
+  width: 100%;
+  padding: 10px 10px 10px 40px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  outline: none;
+  background-color: #f8f8f8;
+  font-size: 16px;
+}
+
+.inputField:focus {
+  border-color: #007bff;
+  background-color: #fff;
+}
