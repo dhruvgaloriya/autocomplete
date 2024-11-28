@@ -15,6 +15,11 @@ const DataList: React.FC<DataListProps> = ({ items, onSelect, renderItem }) => {
           key={item.id}
           className={styles.dataItem}
           onClick={() => onSelect(item.name)}
+          onKeyDown={(event) => {
+            if (event.key === "Enter") {
+              onSelect(item.name);
+            }
+          }}
         >
           {renderItem(item)}
         </li>

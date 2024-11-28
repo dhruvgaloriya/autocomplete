@@ -1,0 +1,504 @@
+{
+  "countries": [
+    {
+      "id": 1,
+      "name": "Afghanistan",
+      "currency": "Afghan afghani"
+    },
+    {
+      "id": 2,
+      "name": "Albania",
+      "currency": "Albanian lek"
+    },
+    {
+      "id": 3,
+      "name": "Algeria",
+      "currency": "Algerian dinar"
+    },
+    {
+      "id": 4,
+      "name": "Andorra",
+      "currency": "Euro"
+    },
+    {
+      "id": 5,
+      "name": "Angola",
+      "currency": "Angolan kwanza"
+    },
+    {
+      "id": 6,
+      "name": "Argentina",
+      "currency": "Argentine peso"
+    },
+    {
+      "id": 7,
+      "name": "Armenia",
+      "currency": "Armenian dram"
+    },
+    {
+      "id": 8,
+      "name": "Australia",
+      "currency": "Australian dollar"
+    },
+    {
+      "id": 9,
+      "name": "Austria",
+      "currency": "Euro"
+    },
+    {
+      "id": 10,
+      "name": "Azerbaijan",
+      "currency": "Azerbaijani manat"
+    },
+    {
+      "id": 11,
+      "name": "Bahamas",
+      "currency": "Bahamian dollar"
+    },
+    {
+      "id": 12,
+      "name": "Bahrain",
+      "currency": "Bahraini dinar"
+    },
+    {
+      "id": 13,
+      "name": "Bangladesh",
+      "currency": "Bangladeshi taka"
+    },
+    {
+      "id": 14,
+      "name": "Barbados",
+      "currency": "Barbadian dollar"
+    },
+    {
+      "id": 15,
+      "name": "Belarus",
+      "currency": "Belarusian ruble"
+    },
+    {
+      "id": 16,
+      "name": "Belgium",
+      "currency": "Euro"
+    },
+    {
+      "id": 17,
+      "name": "Belize",
+      "currency": "Belize dollar"
+    },
+    {
+      "id": 18,
+      "name": "Benin",
+      "currency": "West African CFA franc"
+    },
+    {
+      "id": 19,
+      "name": "Bhutan",
+      "currency": "Bhutanese ngultrum"
+    },
+    {
+      "id": 20,
+      "name": "Bolivia",
+      "currency": "Bolivian boliviano"
+    },
+    {
+      "id": 21,
+      "name": "Bosnia and Herzegovina",
+      "currency": "Bosnia and Herzegovina convertible mark"
+    },
+    {
+      "id": 22,
+      "name": "Botswana",
+      "currency": "Botswana pula"
+    },
+    {
+      "id": 23,
+      "name": "Brazil",
+      "currency": "Brazilian real"
+    },
+    {
+      "id": 24,
+      "name": "Brunei",
+      "currency": "Brunei dollar"
+    },
+    {
+      "id": 25,
+      "name": "Bulgaria",
+      "currency": "Bulgarian lev"
+    },
+    {
+      "id": 26,
+      "name": "Burkina Faso",
+      "currency": "West African CFA franc"
+    },
+    {
+      "id": 27,
+      "name": "Burundi",
+      "currency": "Burundian franc"
+    },
+    {
+      "id": 28,
+      "name": "Cambodia",
+      "currency": "Cambodian riel"
+    },
+    {
+      "id": 29,
+      "name": "Cameroon",
+      "currency": "Central African CFA franc"
+    },
+    {
+      "id": 30,
+      "name": "Canada",
+      "currency": "Canadian dollar"
+    },
+    {
+      "id": 31,
+      "name": "Cape Verde",
+      "currency": "Cape Verdean escudo"
+    },
+    {
+      "id": 32,
+      "name": "Central African Republic",
+      "currency": "Central African CFA franc"
+    },
+    {
+      "id": 33,
+      "name": "Chad",
+      "currency": "Central African CFA franc"
+    },
+    {
+      "id": 34,
+      "name": "Chile",
+      "currency": "Chilean peso"
+    },
+    {
+      "id": 35,
+      "name": "China",
+      "currency": "Chinese yuan"
+    },
+    {
+      "id": 36,
+      "name": "Colombia",
+      "currency": "Colombian peso"
+    },
+    {
+      "id": 37,
+      "name": "Comoros",
+      "currency": "Comorian franc"
+    },
+    {
+      "id": 38,
+      "name": "Congo",
+      "currency": "Central African CFA franc"
+    },
+    {
+      "id": 39,
+      "name": "Costa Rica",
+      "currency": "Costa Rican colón"
+    },
+    {
+      "id": 40,
+      "name": "Croatia",
+      "currency": "Euro"
+    },
+    {
+      "id": 41,
+      "name": "Cuba",
+      "currency": "Cuban peso"
+    },
+    {
+      "id": 42,
+      "name": "Cyprus",
+      "currency": "Euro"
+    },
+    {
+      "id": 43,
+      "name": "Czech Republic",
+      "currency": "Czech koruna"
+    },
+    {
+      "id": 44,
+      "name": "Denmark",
+      "currency": "Danish krone"
+    },
+    {
+      "id": 45,
+      "name": "Djibouti",
+      "currency": "Djiboutian franc"
+    },
+    {
+      "id": 46,
+      "name": "Dominica",
+      "currency": "East Caribbean dollar"
+    },
+    {
+      "id": 47,
+      "name": "Dominican Republic",
+      "currency": "Dominican peso"
+    },
+    {
+      "id": 48,
+      "name": "East Timor",
+      "currency": "United States dollar"
+    },
+    {
+      "id": 49,
+      "name": "Ecuador",
+      "currency": "United States dollar"
+    },
+    {
+      "id": 50,
+      "name": "Egypt",
+      "currency": "Egyptian pound"
+    },
+    {
+      "id": 51,
+      "name": "El Salvador",
+      "currency": "United States dollar"
+    },
+    {
+      "id": 52,
+      "name": "Equatorial Guinea",
+      "currency": "Central African CFA franc"
+    },
+    {
+      "id": 53,
+      "name": "Eritrea",
+      "currency": "Eritrean nakfa"
+    },
+    {
+      "id": 54,
+      "name": "Estonia",
+      "currency": "Euro"
+    },
+    {
+      "id": 55,
+      "name": "Ethiopia",
+      "currency": "Ethiopian birr"
+    },
+    {
+      "id": 56,
+      "name": "Fiji",
+      "currency": "Fijian dollar"
+    },
+    {
+      "id": 57,
+      "name": "Finland",
+      "currency": "Euro"
+    },
+    {
+      "id": 58,
+      "name": "France",
+      "currency": "Euro"
+    },
+    {
+      "id": 59,
+      "name": "Gabon",
+      "currency": "Central African CFA franc"
+    },
+    {
+      "id": 60,
+      "name": "Gambia",
+      "currency": "Gambian dalasi"
+    },
+    {
+      "id": 61,
+      "name": "Georgia",
+      "currency": "Georgian lari"
+    },
+    {
+      "id": 62,
+      "name": "Germany",
+      "currency": "Euro"
+    },
+    {
+      "id": 63,
+      "name": "Ghana",
+      "currency": "Ghanaian cedi"
+    },
+    {
+      "id": 64,
+      "name": "Greece",
+      "currency": "Euro"
+    },
+    {
+      "id": 65,
+      "name": "Grenada",
+      "currency": "East Caribbean dollar"
+    },
+    {
+      "id": 66,
+      "name": "Guatemala",
+      "currency": "Guatemalan quetzal"
+    },
+    {
+      "id": 67,
+      "name": "Guinea",
+      "currency": "Guinean franc"
+    },
+    {
+      "id": 68,
+      "name": "Guinea-Bissau",
+      "currency": "West African CFA franc"
+    },
+    {
+      "id": 69,
+      "name": "Guyana",
+      "currency": "Guyanese dollar"
+    },
+    {
+      "id": 70,
+      "name": "Haiti",
+      "currency": "Haitian gourde"
+    },
+    {
+      "id": 71,
+      "name": "Honduras",
+      "currency": "Honduran lempira"
+    },
+    {
+      "id": 72,
+      "name": "Hungary",
+      "currency": "Hungarian forint"
+    },
+    {
+      "id": 73,
+      "name": "Iceland",
+      "currency": "Icelandic króna"
+    },
+    {
+      "id": 74,
+      "name": "India",
+      "currency": "Indian rupee"
+    },
+    {
+      "id": 75,
+      "name": "Indonesia",
+      "currency": "Indonesian rupiah"
+    },
+    {
+      "id": 76,
+      "name": "Iran",
+      "currency": "Iranian rial"
+    },
+    {
+      "id": 77,
+      "name": "Iraq",
+      "currency": "Iraqi dinar"
+    },
+    {
+      "id": 78,
+      "name": "Ireland",
+      "currency": "Euro"
+    },
+    {
+      "id": 79,
+      "name": "Israel",
+      "currency": "Israeli new shekel"
+    },
+    {
+      "id": 80,
+      "name": "Italy",
+      "currency": "Euro"
+    },
+    {
+      "id": 81,
+      "name": "Jamaica",
+      "currency": "Jamaican dollar"
+    },
+    {
+      "id": 82,
+      "name": "Japan",
+      "currency": "Japanese yen"
+    },
+    {
+      "id": 83,
+      "name": "Jordan",
+      "currency": "Jordanian dinar"
+    },
+    {
+      "id": 84,
+      "name": "Kazakhstan",
+      "currency": "Kazakhstani tenge"
+    },
+    {
+      "id": 85,
+      "name": "Kenya",
+      "currency": "Kenyan shilling"
+    },
+    {
+      "id": 86,
+      "name": "Kiribati",
+      "currency": "Australian dollar"
+    },
+    {
+      "id": 87,
+      "name": "North Korea",
+      "currency": "North Korean won"
+    },
+    {
+      "id": 88,
+      "name": "South Korea",
+      "currency": "South Korean won"
+    },
+    {
+      "id": 89,
+      "name": "Kuwait",
+      "currency": "Kuwaiti dinar"
+    },
+    {
+      "id": 90,
+      "name": "Kyrgyzstan",
+      "currency": "Kyrgyzstani som"
+    },
+    {
+      "id": 91,
+      "name": "Laos",
+      "currency": "Lao kip"
+    },
+    {
+      "id": 92,
+      "name": "Latvia",
+      "currency": "Euro"
+    },
+    {
+      "id": 93,
+      "name": "Lebanon",
+      "currency": "Lebanese pound"
+    },
+    {
+      "id": 94,
+      "name": "Lesotho",
+      "currency": "Lesotho loti"
+    },
+    {
+      "id": 95,
+      "name": "Liberia",
+      "currency": "Liberian dollar"
+    },
+    {
+      "id": 96,
+      "name": "Libya",
+      "currency": "Libyan dinar"
+    },
+    {
+      "id": 97,
+      "name": "Liechtenstein",
+      "currency": "Swiss franc"
+    },
+    {
+      "id": 98,
+      "name": "Lithuania",
+      "currency": "Euro"
+    },
+    {
+      "id": 99,
+      "name": "Luxembourg",
+      "currency": "Euro"
+    },
+    {
+      "id": 100,
+      "name": "Madagascar",
+      "currency": "Malagasy ariary"
+    }
+  ]
+}

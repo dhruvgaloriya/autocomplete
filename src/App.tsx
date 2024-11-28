@@ -1,49 +1,81 @@
 import { AutoComplete } from "@/components/molecule/autocomplete/src";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
+import useDebounce from "./hooks/use-debouce";
+import mockdata from "./mockdata/data.json";
 
-interface User {
+interface Country {
   id: number;
   name: string;
-  username: string;
-  email: string;
+  currency: string;
 }
 
-const users: User[] = [
-  { id: 1, name: "John Doe", username: "johndoe", email: "john@example.com" },
-  {
-    id: 2,
-    name: "Jane Smith",
-    username: "janesmith",
-    email: "jane@example.com",
-  },
-  {
-    id: 3,
-    name: "Alice Johnson",
-    username: "alicej",
-    email: "alice@example.com",
-  },
-];
-
 const App: React.FC = () => {
-  const handleSelect = (user: User) => {
-    console.log("Selected User:", user);
+  const [countries, setCountries] = useState<Country[]>([]);
+  const [query, setQuery] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const mockCountries: Country[] = mockdata.countries;
+
+  const debouncedQuery = useDebounce(query, 750);
+
+  useEffect(() => {
+    if (debouncedQuery) {
+      setLoading(true);
+      setTimeout(() => {
+        const filteredCountries = mockCountries.filter((country) =>
+          country.name.toLowerCase().includes(debouncedQuery.toLowerCase())
+        );
+        setCountries(filteredCountries);
+        setLoading(false);
+      }, 1000); // Simulate a 1-second delay
+    } else {
+      setCountries([]);
+    }
+  }, [debouncedQuery]);
+
+  const handleSelect = (country: Country) => {
+    console.log("Selected Country:", country);
   };
 
   return (
     <div>
       <h1>AutoComplete Example</h1>
       <AutoComplete
-        items={users}
         filterKey="name"
-        placeholder="Search for a user"
-        onSelect={handleSelect}
+        items={countries}
+        onInputChange={setQuery}
+        onItemSelect={handleSelect}
+        placeholder="Search for a country"
+        loading={loading}
       />
     </div>
   );
 };
 
 export default App;
+
+/*
+  const fetchCountries = async () => {
+      setLoading(true);
+      try {
+        const response = await fetch(
+          `https://cors-anywhere.herokuapp.com/https://freetestapi.com/api/v1/countries?search=${debouncedQuery}`
+        );
+        const data: Country[] = await response.json();
+        setCountries(data);
+      } catch (error) {
+        console.error("Error fetching countries:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCountries();
+  } else {
+    setCountries([]);
+  }
+  */
 
 // import React, { useEffect, useState } from "react";
 // import { DataList } from "./components/atom/data-lists/src";

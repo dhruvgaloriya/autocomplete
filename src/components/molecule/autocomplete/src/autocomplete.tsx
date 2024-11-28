@@ -1,58 +1,31 @@
 import { DataList } from "@/components/atom/data-lists/src";
 import { Input } from "@/components/atom/input/src";
 import { highlightText } from "@/utils/highlighted-text";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./autocomplete.module.css";
 
 interface AutoCompleteProps<T> {
-  items: T[];
-  filterKey: keyof T; // Key used for filtering items (e.g., 'name')
-  placeholder: string;
-  onSelect: (item: T) => void; // Callback when an item is selected
-  debounceDelay?: number; // Optional debounce delay for input
-  renderItem?: (item: T, query: string) => React.ReactNode; // Custom render logic for each item
+  placeholder?: string;
+  filterKey: keyof T; // Key to filter by (e.g., "name")
+  items: T[]; // List of items to display
+  onInputChange: (query: string) => void; // Callback to notify parent of input changes
+  onItemSelect: (item: T) => void; // Callback when an item is selected
+  loading?: boolean; // Show loading state
 }
 
 const AutoComplete = <T extends { id: number }>({
-  items,
-  filterKey,
   placeholder = "Search...",
-  onSelect,
-  debounceDelay = 300,
-  renderItem,
+  filterKey,
+  items,
+  onInputChange,
+  onItemSelect,
+  loading = false,
 }: AutoCompleteProps<T>) => {
   const [inputValue, setInputValue] = useState<string>("");
-  const [filteredItems, setFilteredItems] = useState<T[]>([]);
-  const [debouncedValue, setDebouncedValue] = useState<string>("");
 
-  // Debounce logic for input value
   useEffect(() => {
-    const handler = setTimeout(
-      () => setDebouncedValue(inputValue),
-      debounceDelay
-    );
-    return () => clearTimeout(handler);
-  }, [inputValue, debounceDelay]);
-
-  // Filter items based on debounced value
-  useEffect(() => {
-    if (!debouncedValue) {
-      setFilteredItems([]);
-    } else {
-      const lowerCaseValue = debouncedValue.toLowerCase();
-      const filtered = items.filter((item) =>
-        String(item[filterKey]).toLowerCase().includes(lowerCaseValue)
-      );
-      setFilteredItems(filtered);
-    }
-  }, [debouncedValue, items, filterKey]);
-
-  // Handle item selection
-  const handleSelect = (item: T) => {
-    setInputValue(String(item[filterKey]));
-    setFilteredItems([]);
-    onSelect(item);
-  };
+    onInputChange(inputValue); // Notify parent of input changes
+  }, [inputValue, onInputChange]);
 
   return (
     <div className={styles.autoComplete}>
@@ -61,14 +34,19 @@ const AutoComplete = <T extends { id: number }>({
         onInputChange={setInputValue}
         placeholder={placeholder}
       />
-      {filteredItems.length > 0 && (
+      {loading && <p>Loading...</p>}
+      {items.length === 0 && inputValue && !loading && <p>No items found.</p>}
+      {items.length > 0 && (
         <DataList
-          items={filteredItems}
+          items={items}
           onSelect={(name) => {
-            const selectedItem = filteredItems.find(
+            const selectedItem = items.find(
               (item) => String(item[filterKey]) === name
             );
-            if (selectedItem) handleSelect(selectedItem);
+            if (selectedItem) {
+              onItemSelect(selectedItem);
+              setInputValue(String(selectedItem[filterKey])); // Update input with selected value
+            }
           }}
           renderItem={(item) => (
             <div>{highlightText(String(item[filterKey]), inputValue)}</div>
@@ -81,3 +59,35 @@ const AutoComplete = <T extends { id: number }>({
 
 export { AutoComplete };
 export type { AutoCompleteProps };
+
+//   const [filteredItems, setFilteredItems] = useState<T[]>([]);
+//   const [debouncedValue, setDebouncedValue] = useState<string>("");
+
+// Debounce logic for input value
+//   useEffect(() => {
+//     const handler = setTimeout(
+//       () => setDebouncedValue(inputValue),
+//       debounceDelay
+//     );
+//     return () => clearTimeout(handler);
+//   }, [inputValue, debounceDelay]);
+
+// Filter items based on debounced value
+//   useEffect(() => {
+//     if (!debouncedValue) {
+//       setFilteredItems([]);
+//     } else {
+//       const lowerCaseValue = debouncedValue.toLowerCase();
+//       const filtered = items.filter((item) =>
+//         String(item[filterKey]).toLowerCase().includes(lowerCaseValue)
+//       );
+//       setFilteredItems(filtered);
+//     }
+//   }, [debouncedValue, items, filterKey]);
+
+// Handle item selection
+//   const handleSelect = (item: T) => {
+//     setInputValue(String(item[filterKey]));
+//     setFilteredItems([]);
+//     onSelect(item);
+//   };
