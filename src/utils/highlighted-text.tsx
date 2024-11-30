@@ -1,4 +1,6 @@
-export const highlightText = (text: string, query: string): React.ReactNode => {
+import { useMemo } from "react";
+
+const highlightText = (text: string, query: string): React.ReactNode => {
   if (!query) return text;
 
   // Escape special regex characters in the query
@@ -20,4 +22,20 @@ export const highlightText = (text: string, query: string): React.ReactNode => {
       part
     )
   );
+};
+
+export const HighlightTextWithMemo = ({
+  text,
+  query,
+}: {
+  text: string;
+  query: string;
+}) => {
+  // Memoize the highlighted text to avoid recalculating on every render
+  const highlightedText = useMemo(
+    () => highlightText(text, query),
+    [text, query]
+  );
+
+  return <>{highlightedText}</>;
 };

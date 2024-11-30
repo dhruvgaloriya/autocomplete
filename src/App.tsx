@@ -1,5 +1,5 @@
 import { AutoComplete } from "@/components/molecule/autocomplete/src";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import useDebounce from "./hooks/use-debouce";
 import mockdata from "./mockdata/data.json";
 

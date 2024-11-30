@@ -1,4 +1,5 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
+import { InputTestIds } from "./input-test-ids.enum";
 import styles from "./input.module.css";
 
 interface InputProps {
@@ -41,12 +42,12 @@ const Input: React.FC<InputProps> = ({
         value={value}
         onChange={handleInputChange}
         aria-label={placeholder}
-        aria-busy={showLoader}
         tabIndex={0}
-        aria-live="polite"
         onKeyDown={onKeyDown}
       />
-      {showLoader && <div className={styles.loader}></div>}
+      {showLoader && (
+        <div className={styles.loader} data-testid={InputTestIds.Loader}></div>
+      )}
     </div>
   );
 };

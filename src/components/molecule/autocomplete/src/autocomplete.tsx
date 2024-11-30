@@ -1,6 +1,6 @@
 import { DataList } from "@/components/atom/data-lists/src";
 import { Input } from "@/components/atom/input/src";
-import { highlightText } from "@/utils/highlighted-text";
+import { HighlightTextWithMemo } from "@/utils/highlighted-text";
 import { useEffect, useState } from "react";
 import styles from "./autocomplete.module.css";
 
@@ -88,9 +88,12 @@ const AutoComplete = <T extends { id: number }>({
         <DataList
           items={items}
           onSelect={handleItemSelect}
-          renderItem={(item) =>
-            highlightText(String(item[filterKey]), inputValue)
-          }
+          renderItem={(item) => (
+            <HighlightTextWithMemo
+              text={String(item[filterKey])}
+              query={inputValue}
+            />
+          )}
           activeIndex={activeIndex}
           onActiveIndexChange={setActiveIndex}
         />
