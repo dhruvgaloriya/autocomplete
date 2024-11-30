@@ -1,23 +1,23 @@
 .dataList {
-  width: 100%;
-  max-width: 280px;
-  max-height: 160px;
-  margin-top: 8px;
-  overflow-y: auto;
-  background-color: #f8f8f8;
-  border: 1px solid #ddd;
-  border-radius: 4px;
   list-style: none;
+  margin: 0;
   padding: 0;
+  border: 1px solid #ccc;
+  max-height: 200px;
+  overflow-y: auto; /* Enables scrolling */
 }
 
 .dataItem {
-  padding: 10px;
+  padding: 8px 12px;
   cursor: pointer;
-  background-color: #e6f7ff;
-  transition: background-color 0.2s;
+  background-color: #fff;
 }
 
-.dataItem:hover {
-  background-color: #bae7ff;
+/* When an item is active (keyboard navigation), apply the active styles */
+.dataItem.activeItem {
+  background-color: #d3d3d3; /* Darker grey for active (selected) item */
+}
+
+.dataItem.activeItem:hover {
+  background-color: #d3d3d3; /* Active item shouldn't change background on hover */
 }

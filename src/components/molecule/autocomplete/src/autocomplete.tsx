@@ -6,11 +6,12 @@ import styles from "./autocomplete.module.css";
 
 interface AutoCompleteProps<T> {
   placeholder?: string;
-  filterKey: keyof T; // Key to filter by (e.g., "name")
-  items: T[]; // List of items to display
-  onInputChange: (query: string) => void; // Callback to notify parent of input changes
-  onItemSelect: (item: T) => void; // Callback when an item is selected
-  loading?: boolean; // Show loading state
+  filterKey: keyof T;
+  items: T[];
+  onInputChange: (query: string) => void;
+  onItemSelect: (item: T) => void;
+  loading?: boolean;
+  isSelected: boolean;
 }
 
 const AutoComplete = <T extends { id: number }>({
@@ -20,74 +21,85 @@ const AutoComplete = <T extends { id: number }>({
   onInputChange,
   onItemSelect,
   loading = false,
+  isSelected,
 }: AutoCompleteProps<T>) => {
   const [inputValue, setInputValue] = useState<string>("");
+  const [activeIndex, setActiveIndex] = useState<number>(-1); // Track active dropdown item
+  const [isDropdownOpen, setDropdownOpen] = useState<boolean>(false);
 
   useEffect(() => {
-    onInputChange(inputValue); // Notify parent of input changes
-  }, [inputValue, onInputChange]);
+    // Trigger search when the inputValue changes and no item is selected
+    if (inputValue && !isSelected) {
+      setDropdownOpen(true);
+    } else {
+      setDropdownOpen(false);
+      setActiveIndex(-1);
+    }
+  }, [inputValue, isSelected]);
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      setActiveIndex((prevIndex) =>
+        prevIndex < items.length - 1 ? prevIndex + 1 : 0
+      );
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      setActiveIndex((prevIndex) =>
+        prevIndex > 0 ? prevIndex - 1 : items.length - 1
+      );
+    } else if (e.key === "Enter" && activeIndex >= 0) {
+      e.preventDefault();
+      const selectedItem = items[activeIndex];
+      if (selectedItem) {
+        onItemSelect(selectedItem);
+        setInputValue(String(selectedItem[filterKey]));
+        setDropdownOpen(false);
+        setActiveIndex(-1);
+      }
+    } else if (e.key === "Escape") {
+      setDropdownOpen(false);
+    }
+  };
+
+  const handleItemSelect = (name: string) => {
+    const selectedItem = items.find((item) => String(item[filterKey]) === name);
+    if (selectedItem) {
+      onItemSelect(selectedItem);
+      setInputValue(String(selectedItem[filterKey]));
+      setDropdownOpen(false);
+      setActiveIndex(-1);
+    }
+  };
 
   return (
     <div className={styles.autoComplete}>
       <Input
         value={inputValue}
-        onInputChange={setInputValue}
+        onInputChange={(value) => {
+          setInputValue(value);
+          onInputChange(value);
+        }}
         placeholder={placeholder}
+        showLoader={loading}
+        onKeyDown={handleKeyDown}
       />
-      {loading && <p>Loading...</p>}
-      {items.length === 0 && inputValue && !loading && <p>No items found.</p>}
-      {items.length > 0 && (
+      {isDropdownOpen && !loading && items.length > 0 && (
         <DataList
           items={items}
-          onSelect={(name) => {
-            const selectedItem = items.find(
-              (item) => String(item[filterKey]) === name
-            );
-            if (selectedItem) {
-              onItemSelect(selectedItem);
-              setInputValue(String(selectedItem[filterKey])); // Update input with selected value
-            }
-          }}
-          renderItem={(item) => (
-            <div>{highlightText(String(item[filterKey]), inputValue)}</div>
-          )}
+          onSelect={handleItemSelect}
+          renderItem={(item) =>
+            highlightText(String(item[filterKey]), inputValue)
+          }
+          activeIndex={activeIndex}
+          onActiveIndexChange={setActiveIndex}
         />
+      )}
+      {items.length === 0 && isDropdownOpen && !loading && (
+        <p className={styles.message}>No items found.</p>
       )}
     </div>
   );
 };
-
 export { AutoComplete };
 export type { AutoCompleteProps };
-
-//   const [filteredItems, setFilteredItems] = useState<T[]>([]);
-//   const [debouncedValue, setDebouncedValue] = useState<string>("");
-
-// Debounce logic for input value
-//   useEffect(() => {
-//     const handler = setTimeout(
-//       () => setDebouncedValue(inputValue),
-//       debounceDelay
-//     );
-//     return () => clearTimeout(handler);
-//   }, [inputValue, debounceDelay]);
-
-// Filter items based on debounced value
-//   useEffect(() => {
-//     if (!debouncedValue) {
-//       setFilteredItems([]);
-//     } else {
-//       const lowerCaseValue = debouncedValue.toLowerCase();
-//       const filtered = items.filter((item) =>
-//         String(item[filterKey]).toLowerCase().includes(lowerCaseValue)
-//       );
-//       setFilteredItems(filtered);
-//     }
-//   }, [debouncedValue, items, filterKey]);
-
-// Handle item selection
-//   const handleSelect = (item: T) => {
-//     setInputValue(String(item[filterKey]));
-//     setFilteredItems([]);
-//     onSelect(item);
-//   };

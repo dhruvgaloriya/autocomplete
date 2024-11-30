@@ -1,5 +1,4 @@
 import { AutoComplete } from "@/components/molecule/autocomplete/src";
-
 import React, { useEffect, useState } from "react";
 import useDebounce from "./hooks/use-debouce";
 import mockdata from "./mockdata/data.json";
@@ -12,15 +11,15 @@ interface Country {
 
 const App: React.FC = () => {
   const [countries, setCountries] = useState<Country[]>([]);
-  const [query, setQuery] = useState<string>("");
+  const [query, setQuery] = useState<string>(""); // Query for search
   const [loading, setLoading] = useState<boolean>(false);
+  const [selectedCountry, setSelectedCountry] = useState<Country | null>(null); // Track selected country
 
   const mockCountries: Country[] = mockdata.countries;
-
   const debouncedQuery = useDebounce(query, 750);
 
   useEffect(() => {
-    if (debouncedQuery) {
+    if (debouncedQuery && !selectedCountry) {
       setLoading(true);
       setTimeout(() => {
         const filteredCountries = mockCountries.filter((country) =>
@@ -29,13 +28,23 @@ const App: React.FC = () => {
         setCountries(filteredCountries);
         setLoading(false);
       }, 1000); // Simulate a 1-second delay
-    } else {
-      setCountries([]);
+    } else if (!debouncedQuery) {
+      setCountries([]); // Clear list when query is empty
     }
-  }, [debouncedQuery]);
+  }, [debouncedQuery, selectedCountry]); // No search if country is selected
 
   const handleSelect = (country: Country) => {
-    console.log("Selected Country:", country);
+    setSelectedCountry(country); // Mark as selected
+    setQuery(country.name); // Set query to the selected country
+    setCountries([]); // Clear dropdown after selection
+    setQuery("");
+  };
+
+  const handleInputChange = (value: string) => {
+    if (selectedCountry) {
+      setSelectedCountry(null); // Clear selection when typing a new value
+    }
+    setQuery(value); // Update query with the new input
   };
 
   return (
@@ -44,10 +53,11 @@ const App: React.FC = () => {
       <AutoComplete
         filterKey="name"
         items={countries}
-        onInputChange={setQuery}
+        onInputChange={handleInputChange} // Pass query input change to AutoComplete
         onItemSelect={handleSelect}
         placeholder="Search for a country"
         loading={loading}
+        isSelected={!!selectedCountry} // Pass selected status to AutoComplete
       />
     </div>
   );
