@@ -1,7 +1,7 @@
 import { DataList } from "@/components/atom/data-lists/src";
 import { Input } from "@/components/atom/input/src";
 import { HighlightTextWithMemo } from "@/utils/highlighted-text";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import styles from "./autocomplete.module.css";
 
 interface AutoCompleteProps<T> {
@@ -38,68 +38,85 @@ const AutoComplete = <T extends { id: number }>({
   }, [inputValue, isSelected]);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "ArrowDown") {
-      e.preventDefault();
-      setActiveIndex((prevIndex) =>
-        prevIndex < items.length - 1 ? prevIndex + 1 : 0
-      );
-    } else if (e.key === "ArrowUp") {
-      e.preventDefault();
-      setActiveIndex((prevIndex) =>
-        prevIndex > 0 ? prevIndex - 1 : items.length - 1
-      );
-    } else if (e.key === "Enter" && activeIndex >= 0) {
-      e.preventDefault();
-      const selectedItem = items[activeIndex];
-      if (selectedItem) {
-        onItemSelect(selectedItem);
-        setInputValue(String(selectedItem[filterKey]));
+    const itemCount = items.length;
+
+    switch (e.key) {
+      case "ArrowDown":
+        e.preventDefault();
+        setActiveIndex((prevIndex) => (prevIndex + 1) % itemCount);
+        break;
+
+      case "ArrowUp":
+        e.preventDefault();
+        setActiveIndex((prevIndex) =>
+          prevIndex > 0 ? prevIndex - 1 : itemCount - 1
+        );
+        break;
+
+      case "Enter":
+        if (activeIndex >= 0) {
+          e.preventDefault();
+          const selectedItem = items[activeIndex];
+          handleItemSelect(selectedItem);
+        }
+        break;
+
+      case "Escape":
         setDropdownOpen(false);
-        setActiveIndex(-1);
-      }
-    } else if (e.key === "Escape") {
-      setDropdownOpen(false);
+        break;
     }
   };
 
-  const handleItemSelect = (id: number) => {
-    const selectedItem = items.find((item) => item.id === id);
-    if (selectedItem) {
-      onItemSelect(selectedItem);
-      setInputValue(String(selectedItem[filterKey]));
-      setDropdownOpen(false);
-      setActiveIndex(-1);
-    }
+  const handleItemSelect = (item: T) => {
+    onItemSelect(item);
+    setInputValue(String(item[filterKey]));
+    setDropdownOpen(false);
+    setActiveIndex(-1);
   };
+
+  // Handle selection by ID (e.g., from the rendered DataList)
+  const handleDataListItemSelect = (id: number) => {
+    const selectedItem = items.find((item) => item.id === id);
+    if (selectedItem) handleItemSelect(selectedItem);
+  };
+
+  const handleInputChange = useCallback(
+    (value: string) => {
+      if (isSelected) setActiveIndex(-1);
+      setInputValue(value);
+      onInputChange(value);
+    },
+    [onInputChange, isSelected]
+  );
 
   return (
     <div className={styles.autoComplete}>
       <Input
         value={inputValue}
-        onInputChange={(value) => {
-          setInputValue(value);
-          onInputChange(value);
-        }}
+        onInputChange={handleInputChange}
         placeholder={placeholder}
         showLoader={loading}
         onKeyDown={handleKeyDown}
       />
-      {isDropdownOpen && !loading && items.length > 0 && (
-        <DataList
-          items={items}
-          onSelect={handleItemSelect}
-          renderItem={(item) => (
-            <HighlightTextWithMemo
-              text={String(item[filterKey])}
-              query={inputValue}
+      {isDropdownOpen && !loading && (
+        <>
+          {items.length > 0 ? (
+            <DataList
+              items={items}
+              onSelect={handleDataListItemSelect}
+              renderItem={(item) => (
+                <HighlightTextWithMemo
+                  text={String(item[filterKey])}
+                  query={inputValue}
+                />
+              )}
+              activeIndex={activeIndex}
+              onActiveIndexChange={setActiveIndex}
             />
+          ) : (
+            <p className={styles.message}>No items found.</p>
           )}
-          activeIndex={activeIndex}
-          onActiveIndexChange={setActiveIndex}
-        />
-      )}
-      {items.length === 0 && isDropdownOpen && !loading && (
-        <p className={styles.message}>No items found.</p>
+        </>
       )}
     </div>
   );

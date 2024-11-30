@@ -7,7 +7,7 @@ interface InputProps {
   onInputChange: (value: string) => void;
   value: string;
   showLoader?: boolean; // Loader visibility
-  onKeyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
+  onKeyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void; // Handle keyboard events
 }
 
 const Input: React.FC<InputProps> = ({
@@ -17,34 +17,37 @@ const Input: React.FC<InputProps> = ({
   showLoader = false,
   onKeyDown,
 }) => {
-  const inputRef = useRef<HTMLInputElement | null>(null); // Ref for input element
-  // Focus input field on mount (or reset) to ensure VoiceOver announces it
-  useEffect(() => {
-    if (inputRef.current) {
-      inputRef.current.focus(); // Focus input element
-    }
-  }, []); // Only on initial mount
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onInputChange(e.target.value);
+  // Auto-focus the input field on mount
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
+
+  // Handle changes in the input field
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    onInputChange(event.target.value);
   };
 
   return (
     <div className={styles.inputWrapper}>
-      <div className={styles.leftIcon}>
+      {/* Left Icon */}
+      <div className={styles.leftIcon} aria-hidden="true">
         <span>🔍</span>
       </div>
+      {/* Input Field */}
       <input
-        ref={inputRef} // Assign ref to the input element
+        ref={inputRef}
         className={styles.inputField}
         type="text"
         placeholder={placeholder}
         value={value}
         onChange={handleInputChange}
-        aria-label={placeholder}
+        aria-label={value}
         tabIndex={0}
         onKeyDown={onKeyDown}
       />
+      {/* Loader Indicator */}
       {showLoader && (
         <div className={styles.loader} data-testid={InputTestIds.Loader}></div>
       )}
