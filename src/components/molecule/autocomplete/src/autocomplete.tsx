@@ -62,8 +62,8 @@ const AutoComplete = <T extends { id: number }>({
     }
   };
 
-  const handleItemSelect = (name: string) => {
-    const selectedItem = items.find((item) => String(item[filterKey]) === name);
+  const handleItemSelect = (id: number) => {
+    const selectedItem = items.find((item) => item.id === id);
     if (selectedItem) {
       onItemSelect(selectedItem);
       setInputValue(String(selectedItem[filterKey]));

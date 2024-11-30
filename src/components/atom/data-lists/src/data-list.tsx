@@ -1,24 +1,23 @@
 import React, { useEffect, useRef } from "react";
 import styles from "./data-list.module.css";
 
-interface DataListProps {
-  items: { id: number; name: string }[];
-  onSelect: (name: string) => void;
-  renderItem: (item: { id: number; name: string }) => React.ReactNode;
+interface DataListProps<T> {
+  items: T[];
+  onSelect: (id: number) => void;
+  renderItem: (item: T) => React.ReactNode;
   activeIndex: number; // Track the currently focused item
   onActiveIndexChange: (index: number) => void; // Update active index
 }
 
-const DataList: React.FC<DataListProps> = ({
+const DataList = <T extends { id: number }>({
   items,
   onSelect,
   renderItem,
   activeIndex,
   onActiveIndexChange,
-}) => {
+}: DataListProps<T>) => {
   const listRef = useRef<HTMLUListElement | null>(null);
   useEffect(() => {
-    console.log("activeIndex=====", activeIndex);
     if (listRef.current && activeIndex >= 0) {
       const activeItem = listRef.current.children[activeIndex] as HTMLElement;
       if (activeItem) {
@@ -49,7 +48,7 @@ const DataList: React.FC<DataListProps> = ({
           className={`${styles.dataItem} ${
             index === activeIndex ? styles.activeItem : ""
           }`}
-          onClick={() => onSelect(item.name)}
+          onClick={() => onSelect(item.id)}
           role="option"
           aria-selected={index === activeIndex}
           onMouseMove={() => handleMouseEnter(index)}
