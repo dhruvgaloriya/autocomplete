@@ -32,6 +32,5 @@
     "src/**/*",
     "src/**/*.test.tsx", // Include test files
     "src/**/*.test.ts"
-  ],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  ]
 }
