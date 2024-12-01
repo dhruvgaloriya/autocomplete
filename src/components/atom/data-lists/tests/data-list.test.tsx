@@ -1,5 +1,3 @@
-// src/components/atom/data-list/data-list.test.tsx
-
 import { fireEvent, render, screen } from "@testing-library/react";
 import { DataList } from "../src";
 

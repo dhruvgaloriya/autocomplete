@@ -23,6 +23,16 @@
   padding: 8px;
 }
 
+.clearButton {
+  position: absolute;
+  right: 10px;
+  background: transparent;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  color: #555;
+}
+
 .inputField::placeholder {
   color: #aaa;
 }

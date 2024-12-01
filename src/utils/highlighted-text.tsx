@@ -24,7 +24,7 @@ const highlightText = (text: string, query: string): React.ReactNode => {
   );
 };
 
-export const HighlightTextWithMemo = ({
+export const HighlightText = ({
   text,
   query,
 }: {

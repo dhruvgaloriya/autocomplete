@@ -24,7 +24,7 @@ const useFetchData = <T>(
   const fetchFromMockData = async () => {
     if (!mockData) return;
 
-    await simulateDelay(500); // Simulated delay
+    await simulateDelay(750); // Simulated delay
     const filteredData = mockData.filter((item) =>
       (item as any).name.toLowerCase().includes(debouncedQuery.toLowerCase())
     );
