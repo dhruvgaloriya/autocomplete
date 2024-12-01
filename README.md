@@ -33,6 +33,12 @@ This repository is private, so you won't be able to clone it directly. Instead, 
 
 5. **Run the Application**: Access the Application on http://localhost:5173/
 
+6. **Run Tests**:
+   To run tests, use the following command:
+   ```bash
+   npm run test
+   ```
+
 ### Regarding Mock Data
 
 The autocomplete component uses mock data of countries for demonstration. The mock data is structured as follows:
