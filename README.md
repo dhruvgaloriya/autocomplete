@@ -4,7 +4,7 @@
 
 # Build With
 
-**Languages**: HTML, CSS, TypeScript, Javascript   
+**Languages**: HTML, CSS, TypeScript, Javascript  
 **Library**: React  
 **Build Tool**: Vite
 
@@ -20,44 +20,46 @@ This repository is private, so you won't be able to clone it directly. Instead, 
 
 4. **Install Dependencies**:
    Make sure you're using **Node.js version 18.x** or higher. To install the dependencies, run:
+
    ```bash
    npm install
    ```
 
    Start devlopment server
+
    ```bash
    npm run dev
    ```
 
-   Access the Application:
-   ```bash
-   http://localhost:5173/
-   ```
+5. **Run the Application**: Access the Application on http://localhost:5173/
 
 ### Regarding Mock Data
-   The autocomplete component uses mock data of countries for demonstration. The mock data is structured as follows:
-   ```
-   [
-     {
-       "id": 1,
-       "name": "Xyz",
-       "currency": "xyz"
-     }
-   ]
-   ```
-   
+
+The autocomplete component uses mock data of countries for demonstration. The mock data is structured as follows:
+
+```json
+ {
+   "id": 57,
+   "name": "Finland",
+   "currency": "Euro"
+ },
+ {
+   "id": 58,
+   "name": "France",
+   "currency": "Euro"
+ },
+```
+
 ### API PlaceHolder
-   In the codebase, there is a placeholder URL for making actual API calls. Before replacing it with a API endpoint, ensure that the API supports CORS. During development, we use 
-   a proxy to bypass CORS issues.
 
-1. To use the cors-anywhere proxy service during development, follow these steps
+In the codebase,`src/App.tsx` file line no 23, isMockEnabled is set to `true` by default. you can set it to `false` to use the API.
 
-2. Request Temporary Access:
-   1. Open https://cors-anywhere.herokuapp.com/corsdemo in your browser.
-   2. Click the "Request temporary access" button.
-   3. After temporary access is granted, use the updated API URL (apiUrl) in your API call. This should resolve CORS-related issues while developing locally.
+We are using the cors-anywhere proxy service during development.
 
-3. Replace the below API URL in the placeholder in the code
+Please follow below steps to solve CORS issues during running the application.
 
-4. API URL = `https://cors-anywhere.herokuapp.com/https://freetestapi.com/api/v1/countries`
-  
+**Request Temporary Access**
+
+1.  Open https://cors-anywhere.herokuapp.com/corsdemo in your browser.
+2.  Click the "Request temporary access" button.
+3.  After temporary access is granted, you can use the service.
