@@ -1,83 +1,125 @@
 import { DataList } from "@/components/atom/data-lists/src";
 import { Input } from "@/components/atom/input/src";
-import { highlightText } from "@/utils/highlighted-text";
-import React, { useEffect, useState } from "react";
+import { HighlightTextWithMemo } from "@/utils/highlighted-text";
+import { useCallback, useEffect, useState } from "react";
 import styles from "./autocomplete.module.css";
 
 interface AutoCompleteProps<T> {
+  placeholder?: string;
+  filterKey: keyof T;
   items: T[];
-  filterKey: keyof T; // Key used for filtering items (e.g., 'name')
-  placeholder: string;
-  onSelect: (item: T) => void; // Callback when an item is selected
-  debounceDelay?: number; // Optional debounce delay for input
-  renderItem?: (item: T, query: string) => React.ReactNode; // Custom render logic for each item
+  onInputChange: (query: string) => void;
+  onItemSelect: (item: T) => void;
+  loading?: boolean;
+  isSelected: boolean;
 }
 
 const AutoComplete = <T extends { id: number }>({
-  items,
-  filterKey,
   placeholder = "Search...",
-  onSelect,
-  debounceDelay = 300,
-  renderItem,
+  filterKey,
+  items,
+  onInputChange,
+  onItemSelect,
+  loading = false,
+  isSelected,
 }: AutoCompleteProps<T>) => {
   const [inputValue, setInputValue] = useState<string>("");
-  const [filteredItems, setFilteredItems] = useState<T[]>([]);
-  const [debouncedValue, setDebouncedValue] = useState<string>("");
+  const [activeIndex, setActiveIndex] = useState<number>(-1); // Track active dropdown item
+  const [isDropdownOpen, setDropdownOpen] = useState<boolean>(false);
 
-  // Debounce logic for input value
   useEffect(() => {
-    const handler = setTimeout(
-      () => setDebouncedValue(inputValue),
-      debounceDelay
-    );
-    return () => clearTimeout(handler);
-  }, [inputValue, debounceDelay]);
-
-  // Filter items based on debounced value
-  useEffect(() => {
-    if (!debouncedValue) {
-      setFilteredItems([]);
+    // Trigger search when the inputValue changes and no item is selected
+    if (inputValue && !isSelected) {
+      setDropdownOpen(true);
     } else {
-      const lowerCaseValue = debouncedValue.toLowerCase();
-      const filtered = items.filter((item) =>
-        String(item[filterKey]).toLowerCase().includes(lowerCaseValue)
-      );
-      setFilteredItems(filtered);
+      setDropdownOpen(false);
+      setActiveIndex(-1);
     }
-  }, [debouncedValue, items, filterKey]);
+  }, [inputValue, isSelected]);
 
-  // Handle item selection
-  const handleSelect = (item: T) => {
-    setInputValue(String(item[filterKey]));
-    setFilteredItems([]);
-    onSelect(item);
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const itemCount = items.length;
+
+    switch (e.key) {
+      case "ArrowDown":
+        e.preventDefault();
+        setActiveIndex((prevIndex) => (prevIndex + 1) % itemCount);
+        break;
+
+      case "ArrowUp":
+        e.preventDefault();
+        setActiveIndex((prevIndex) =>
+          prevIndex > 0 ? prevIndex - 1 : itemCount - 1
+        );
+        break;
+
+      case "Enter":
+        if (activeIndex >= 0) {
+          e.preventDefault();
+          const selectedItem = items[activeIndex];
+          handleItemSelect(selectedItem);
+        }
+        break;
+
+      case "Escape":
+        setDropdownOpen(false);
+        break;
+    }
   };
+
+  const handleItemSelect = (item: T) => {
+    onItemSelect(item);
+    setInputValue(String(item[filterKey]));
+    setDropdownOpen(false);
+    setActiveIndex(-1);
+  };
+
+  // Handle selection by ID (e.g., from the rendered DataList)
+  const handleDataListItemSelect = (id: number) => {
+    const selectedItem = items.find((item) => item.id === id);
+    if (selectedItem) handleItemSelect(selectedItem);
+  };
+
+  const handleInputChange = useCallback(
+    (value: string) => {
+      if (isSelected) setActiveIndex(-1);
+      setInputValue(value);
+      onInputChange(value);
+    },
+    [onInputChange, isSelected]
+  );
 
   return (
     <div className={styles.autoComplete}>
       <Input
         value={inputValue}
-        onInputChange={setInputValue}
+        onInputChange={handleInputChange}
         placeholder={placeholder}
+        showLoader={loading}
+        onKeyDown={handleKeyDown}
       />
-      {filteredItems.length > 0 && (
-        <DataList
-          items={filteredItems}
-          onSelect={(name) => {
-            const selectedItem = filteredItems.find(
-              (item) => String(item[filterKey]) === name
-            );
-            if (selectedItem) handleSelect(selectedItem);
-          }}
-          renderItem={(item) => (
-            <div>{highlightText(String(item[filterKey]), inputValue)}</div>
+      {isDropdownOpen && !loading && (
+        <>
+          {items.length > 0 ? (
+            <DataList
+              items={items}
+              onSelect={handleDataListItemSelect}
+              renderItem={(item) => (
+                <HighlightTextWithMemo
+                  text={String(item[filterKey])}
+                  query={inputValue.trim()}
+                />
+              )}
+              activeIndex={activeIndex}
+              onActiveIndexChange={setActiveIndex}
+            />
+          ) : (
+            <p className={styles.message}>No items found.</p>
           )}
-        />
+        </>
       )}
     </div>
   );
 };
-
 export { AutoComplete };
 export type { AutoCompleteProps };
