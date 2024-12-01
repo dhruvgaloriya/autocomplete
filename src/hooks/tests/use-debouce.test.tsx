@@ -1,5 +1,5 @@
 import { act, renderHook } from "@testing-library/react";
-import useDebounce from "./use-debouce";
+import useDebounce from "../use-debouce";
 
 jest.useFakeTimers();
 

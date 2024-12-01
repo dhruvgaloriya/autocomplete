@@ -107,7 +107,7 @@ const AutoComplete = <T extends { id: number }>({
               renderItem={(item) => (
                 <HighlightTextWithMemo
                   text={String(item[filterKey])}
-                  query={inputValue}
+                  query={inputValue.trim()}
                 />
               )}
               activeIndex={activeIndex}
