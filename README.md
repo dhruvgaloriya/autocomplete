@@ -1,18 +1,22 @@
-# Project Name
+## Project Name
 
 **Autocomplete component**
 
-# Build With
+## Build With
 
 **Languages**: HTML, CSS, TypeScript, Javascript  
 **Library**: React  
 **Build Tool**: Vite
 
+## Demo 
+
+https://github.com/user-attachments/assets/3e406379-ca8f-423d-9d15-55425ec69a74
+
 ## How to Use
 
 This repository is private, so you won't be able to clone it directly. Instead, you need to download the project as a ZIP file.
 
-### Steps to Set Up:
+## Steps to Set Up:
 
 1. **Download the ZIP file** of the repository from the provided source.
 2. **Extract** the contents of the ZIP file to a directory on your local machine.
@@ -39,7 +43,7 @@ This repository is private, so you won't be able to clone it directly. Instead, 
    npm run test
    ```
 
-### Regarding Mock Data
+## Regarding Mock Data
 
 The autocomplete component uses mock data of countries for demonstration. The mock data is structured as follows:
 
@@ -56,7 +60,7 @@ The autocomplete component uses mock data of countries for demonstration. The mo
  },
 ```
 
-### API PlaceHolder
+## API PlaceHolder
 
 In the codebase,`src/App.tsx` file line no 23, isMockEnabled is set to `true` by default. you can set it to `false` to use the API.
 
@@ -69,3 +73,4 @@ Please follow below steps to solve CORS issues during running the application.
 1.  Open https://cors-anywhere.herokuapp.com/corsdemo in your browser.
 2.  Click the "Request temporary access" button.
 3.  After temporary access is granted, you can use the service.
+
