@@ -4,7 +4,12 @@
 }
 
 .message {
-  color: #666;
-  font-size: 14px;
-  padding: 8px 0;
+  color: #6c757d;
+  font-size: 18px;
+  padding: 6px 18px;
+  text-align: center;
+  background-color: #f8f9fa;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  margin-top: 10px;
 }

@@ -29,13 +29,17 @@ const Input: React.FC<InputProps> = ({
     onInputChange(event.target.value);
   };
 
+  // Clear the input field
+  const handleClearInput = () => {
+    onInputChange("");
+    inputRef.current?.focus();
+  };
+
   return (
     <div className={styles.inputWrapper}>
-      {/* Left Icon */}
       <div className={styles.leftIcon} aria-hidden="true">
         <span>🔍</span>
       </div>
-      {/* Input Field */}
       <input
         ref={inputRef}
         className={styles.inputField}
@@ -47,7 +51,15 @@ const Input: React.FC<InputProps> = ({
         tabIndex={0}
         onKeyDown={onKeyDown}
       />
-      {/* Loader Indicator */}
+      {!showLoader && value && (
+        <button
+          className={styles.clearButton}
+          onClick={handleClearInput}
+          aria-label="Clear input"
+        >
+          ✖
+        </button>
+      )}
       {showLoader && (
         <div className={styles.loader} data-testid={InputTestIds.Loader}></div>
       )}

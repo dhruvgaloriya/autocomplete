@@ -1,12 +1,12 @@
 import { render } from "@testing-library/react";
-import { HighlightTextWithMemo } from "./highlighted-text";
+import { HighlightText } from "./highlighted-text";
 
 describe("highlightText", () => {
   it("should highlight matching text with background color", () => {
     const inputText = "Hello, this is a test string";
     const query = "test";
     const { container } = render(
-      <HighlightTextWithMemo text={inputText} query={query} />
+      <HighlightText text={inputText} query={query} />
     );
 
     const highlightedSpan = container.querySelector("span");
@@ -23,7 +23,7 @@ describe("highlightText", () => {
     const query = "goodbye";
 
     const { container } = render(
-      <HighlightTextWithMemo text={inputText} query={query} />
+      <HighlightText text={inputText} query={query} />
     );
 
     expect(container.textContent).toBe(inputText);
@@ -34,7 +34,7 @@ describe("highlightText", () => {
     const query = "TEST";
 
     const { container } = render(
-      <HighlightTextWithMemo text={inputText} query={query} />
+      <HighlightText text={inputText} query={query} />
     );
     const highlightedSpan = container.querySelector("span");
     expect(highlightedSpan).toBeInTheDocument();
@@ -47,7 +47,7 @@ describe("highlightText", () => {
     const query = "$";
 
     const { container } = render(
-      <HighlightTextWithMemo text={inputText} query={query} />
+      <HighlightText text={inputText} query={query} />
     );
 
     const highlightedSpan = container.querySelector("span");
