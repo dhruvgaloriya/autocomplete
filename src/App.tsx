@@ -19,10 +19,10 @@ const App: React.FC = () => {
     loading,
     error,
   } = useFetchData<Country>(
-    "", // Replace with API URL if needed (https://cors-anywhere.herokuapp.com/https://freetestapi.com/api/v1/countries) (Please follow readme API PlaceHolder section)
+    "", // Replace with API URL if needed (https://cors-anywhere.herokuapp.com/https://freetestapi.com/api/v1/countries) (Please follow readme. API PlaceHolder section.)
     query,
     750,
-    mockdata.countries // Provide mock data for local testing
+    mockdata.countries // Provide mock data for local testing (Please comment this line if you are using API)
   );
 
   const handleSelect = (country: Country) => {
