@@ -7,7 +7,7 @@ import mockdata from "./mockdata/data.json";
 interface Country {
   id: number;
   name: string;
-  currency: string;
+  currency?: string;
 }
 
 const App: React.FC = () => {

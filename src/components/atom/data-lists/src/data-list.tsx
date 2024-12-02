@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { memo, useEffect, useRef } from "react";
 import styles from "./data-list.module.css";
 
 interface DataListProps<T> {
@@ -9,7 +9,7 @@ interface DataListProps<T> {
   onActiveIndexChange: (index: number) => void; // Update the active index
 }
 
-const DataList = <T extends { id: number }>({
+const DataList = <T extends { id: number; name: string }>({
   items,
   onSelect,
   renderItem,
@@ -64,5 +64,7 @@ const DataList = <T extends { id: number }>({
   );
 };
 
-export { DataList };
+const MemoizedDataList = memo(DataList);
+
+export { MemoizedDataList as DataList };
 export type { DataListProps };

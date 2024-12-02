@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { memo, useCallback, useEffect, useRef } from "react";
 import { InputTestIds } from "./input-test-ids.enum";
 import styles from "./input.module.css";
 
@@ -25,9 +25,12 @@ const Input: React.FC<InputProps> = ({
   }, []);
 
   // Handle changes in the input field
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    onInputChange(event.target.value);
-  };
+  const handleInputChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      onInputChange(event.target.value);
+    },
+    [onInputChange]
+  );
 
   // Clear the input field
   const handleClearInput = () => {
@@ -67,5 +70,7 @@ const Input: React.FC<InputProps> = ({
   );
 };
 
-export { Input };
+const MemoizedInput = memo(Input);
+
+export { MemoizedInput as Input };
 export type { InputProps };
